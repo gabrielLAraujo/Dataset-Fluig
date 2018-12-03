@@ -1,20 +1,20 @@
 function createDataset(fields, constraints, sortFields) {
 	
-	log.info("DS_ControleInventarioManutencao - INÍCIO");
+	log.info("DS_Exemplo.js - INÍCIO");
 	
 	try {
 		var contextWD = new javax.naming.InitialContext();
 		var dataSourceWD = contextWD.lookup("java:/jdbc/FluigDS");
 		var connectionWD = dataSourceWD.getConnection();
 	} catch (e) {
-		log.info("DS_ControleInventarioManutencao - ERRO 1: " + e.message + "(#" + e.lineNumber + ")");
+		log.info("DS_Exemplo.js - ERRO 1: " + e.message + "(#" + e.lineNumber + ")");
 	}
 	
 	var newDataset = DatasetBuilder.newDataset();
 	
 	if (fields != null && fields.length > 0) {
 		for (var alpha in fields) {
-			log.info("DS_ControleInventarioManutencao - FIELDS " + alpha + ": " + fields[alpha]);
+			log.info("DS_Exemplo.js - FIELDS " + alpha + ": " + fields[alpha]);
 			newDataset.addColumn(fields[alpha]);
 		}
 	} else {
@@ -69,7 +69,7 @@ function createDataset(fields, constraints, sortFields) {
 		if (constraints[i].getFieldName().toString() == 'ATIVO')
 			ativo = constraints[i].initialValue;
 	
-		log.info("DS_ControleInventarioManutencao - CONSTRAINTS " + constraints[i].getFieldName().toString().toUpperCase() + ": " + 
+		log.info("DS_Exemplo.js - CONSTRAINTS " + constraints[i].getFieldName().toString().toUpperCase() + ": " + 
 				constraints[i].initialValue + " - " + constraints[i].finalValue);
 	}
 	
@@ -101,7 +101,7 @@ function createDataset(fields, constraints, sortFields) {
 
 	if (mensagemErro != "") {
 		log.info(opcao);
-		log.info("DS_ControleInventarioManutencao - ERRO 2: " + mensagemErro);
+		log.info("DS_Exemplo.js - ERRO 2: " + mensagemErro);
 		newDataset = DatasetBuilder.newDataset();
 		newDataset.addColumn("ERRO");
 		newDataset.addRow(new Array(mensagemErro));
@@ -115,7 +115,7 @@ function createDataset(fields, constraints, sortFields) {
 	
 	if (opcao == "CRIAR") {
 		
-		SQL = "INSERT INTO INVENTARIO_EMBARCACAO " + 
+		SQL = "INSERT INTO EXEMPLO " + 
 		"(EMBARCACAO ,IDPRD, CODIGOPRD, DESCRICAO, UNIDADE_MEDIDA, QUANTIDADE_ESTOQUE, QUANTIDADE_MINIMA, ATIVO) " + 
 		"VALUES ('"+ embarcacao + "','" + idPrd + "','" + codigoPrd + "','" + descricao + "','" + unidade_medida + "','" + quantidade_estoque + "','" + quantidade_minima + "','" + ativo + "')";
 		
@@ -142,7 +142,7 @@ function createDataset(fields, constraints, sortFields) {
 			SQL += " EMBARCACAO, IDPRD, CODIGOPRD, DESCRICAO, UNIDADE_MEDIDA, QUANTIDADE_ESTOQUE, QUANTIDADE_MINIMA, ATIVO ";
 		}
 		
-		SQL += "FROM INVENTARIO_EMBARCACAO ";
+		SQL += "FROM EXEMPLO ";
 		
 		var flagSQL = "WHERE";
 		
@@ -187,7 +187,7 @@ function createDataset(fields, constraints, sortFields) {
 		
 	} else if (opcao == "EDITAR") {
 		
-		SQL = "UPDATE INVENTARIO_EMBARCACAO SET " +
+		SQL = "UPDATE EXEMPLO SET " +
 				"EMBARCACAO = \'" + embarcacao + "\'," +
 				"IDPRD = '" + idPrd + "'," +
 				"CODIGOPRD = '" + codigoPrd + "\'," +
@@ -214,7 +214,7 @@ function createDataset(fields, constraints, sortFields) {
 			SQL += "EMBARCACAO, IDPRD, CODIGOPRD, DESCRICAO, UNIDADE_MEDIDA, QUANTIDADE_ESTOQUE, QUANTIDADE_MINIMA, ATIVO ";
 		}
 		
-		SQL += "FROM INVENTARIO_EMBARCACAO ";
+		SQL += "FROM EXEMPLO ";
 		
 		var flagSQL = "WHERE";
 		
@@ -227,11 +227,11 @@ function createDataset(fields, constraints, sortFields) {
 		
 	} else if (opcao == "REMOVER") {
 		
-		SQL = "DELETE FROM INVENTARIO_EMBARCACAO WHERE EMBARCACAO = " + embarcacao;
+		SQL = "DELETE FROM EXEMPLO WHERE EMBARCACAO = " + embarcacao;
 		
 	} 
 	
-	log.info("DS_ControleInventarioManutencao - SQL: " + SQL);
+	log.info("DS_Exemplo.js - SQL: " + SQL);
 	
 	try {
 		
@@ -277,7 +277,7 @@ function createDataset(fields, constraints, sortFields) {
 			newDataset.addRow(arrayRetorno);
 		}
 	} catch (e) {
-		log.info("DS_ControleInventarioManutencao - ERRO 3: " + e.message + "(#" + e.lineNumber + ")");
+		log.info("DS_Exemplo.js - ERRO 3: " + e.message + "(#" + e.lineNumber + ")");
 	} finally {
         if (statementWD != null) {
         	statementWD.close();
@@ -287,7 +287,7 @@ function createDataset(fields, constraints, sortFields) {
         }
 	}
 	
-	log.info("DS_ControleInventarioManutencao - FIM");
+	log.info("DS_Exemplo.js - FIM");
    
 	return newDataset;
 	
